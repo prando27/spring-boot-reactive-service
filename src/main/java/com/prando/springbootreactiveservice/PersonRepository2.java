@@ -15,6 +15,7 @@ public class PersonRepository2 {
     }
 
     public void select() {
+        // https://stackoverflow.com/questions/42037552/how-to-properly-manage-closable-resources-in-reactor
         Mono.using(
                 this::connectionMono,
 
