@@ -2,7 +2,6 @@ package com.prando.springbootreactiveservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * 1 - REST using functional endpoints - OK
@@ -15,7 +14,6 @@ import org.springframework.cache.annotation.EnableCaching;
  * 4.1 - https://www.baeldung.com/spring-webflux-errors
  */
 @SpringBootApplication
-@EnableCaching
 public class SpringBootReactiveServiceApplication {
 
     public static void main(String[] args) {

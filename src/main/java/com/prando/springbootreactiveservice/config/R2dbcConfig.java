@@ -10,7 +10,7 @@ import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @Configuration
-@EnableR2dbcRepositories
+@EnableR2dbcRepositories(basePackages = "com.prando.springbootreactiveservice")
 public class R2dbcConfig extends AbstractR2dbcConfiguration {
 
     @Value("${r2dbc.host}")
