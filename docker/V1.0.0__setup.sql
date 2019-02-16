@@ -10,13 +10,11 @@ IN SCHEMA "example_schema"
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLES
 TO "r2dbc";
 
--- ensure that user backoffice-web-bff-app will have the needed privileges on new sequences
 ALTER DEFAULT PRIVILEGES
 IN SCHEMA "example_schema"
 GRANT USAGE ON SEQUENCES
 TO "r2dbc";
 
--- ensure that new functions will not have default privilege in public schema
 ALTER DEFAULT PRIVILEGES
 REVOKE EXECUTE ON FUNCTIONS
 FROM PUBLIC;
@@ -32,6 +30,3 @@ CREATE TABLE example_schema.PERSON (
   ID INT4 DEFAULT NEXTVAL('example_schema.PERSON_SEQUENCE') PRIMARY KEY,
   NAME VARCHAR(255)
 );
-
-INSERT INTO example_schema.PERSON (NAME) VALUES ('JOSE');
-INSERT INTO example_schema.PERSON (NAME) VALUES ('PRANDO');

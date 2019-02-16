@@ -1,18 +1,18 @@
-package com.prando.springbootreactiveservice;
+package com.prando.springbootreactiveservice.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @JsonDeserialize(builder = Person.Builder.class)
-@Value
+@Data
 @Builder(builderClassName = "Builder", toBuilder = true)
 public class Person {
 
     @Id
-    private final Integer id;
+    private Integer id;
     private final String name;
 
     @JsonPOJOBuilder(withPrefix = "")
