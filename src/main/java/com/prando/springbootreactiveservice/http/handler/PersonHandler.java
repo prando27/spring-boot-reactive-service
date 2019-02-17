@@ -1,6 +1,5 @@
 package com.prando.springbootreactiveservice.http.handler;
 
-import com.prando.springbootreactiveservice.component.personreactorpool.PersonService2;
 import com.prando.springbootreactiveservice.component.personspringdata.PersonComponent;
 import com.prando.springbootreactiveservice.model.Person;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +18,9 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 public class PersonHandler {
 
     private final PersonComponent personComponent;
-    private final PersonService2 personService2;
 
-    public PersonHandler(PersonComponent personComponent, PersonService2 personService2) {
+    public PersonHandler(PersonComponent personComponent) {
         this.personComponent = personComponent;
-        this.personService2 = personService2;
     }
 
     public Mono<ServerResponse> findPersonById(ServerRequest request) {
@@ -34,10 +31,6 @@ public class PersonHandler {
 
     public Mono<ServerResponse> listPerson(ServerRequest request) {
         return ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personComponent.listPerson(), Person.class);
-    }
-
-    public Mono<ServerResponse> listPerson2(ServerRequest request) {
-        return ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personService2.findAll(), Person.class);
     }
 
     public Mono<ServerResponse> createPerson(ServerRequest request) {
