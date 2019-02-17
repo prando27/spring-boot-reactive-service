@@ -17,4 +17,8 @@ Spring WebFlux (with Functional Endpoints), Redis Cache, R2DBC, Spring Data R2DB
    * https://github.com/rdegnan/reactor-pool
    * https://github.com/davidmoten/rxjava2-jdbc
 
-4 - GlobalExceptionHandler - (https://www.baeldung.com/spring-webflux-errors) - TODO
+4 - GlobalExceptionHandler - TODO
+ * https://www.baeldung.com/spring-webflux-errors
+ 
+5 - Validation for Functional Endpoints - TODO
+ * https://www.baeldung.com/spring-functional-endpoints-validation
