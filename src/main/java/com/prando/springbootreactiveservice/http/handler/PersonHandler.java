@@ -1,6 +1,6 @@
 package com.prando.springbootreactiveservice.http.handler;
 
-import com.prando.springbootreactiveservice.component.PersonService;
+import com.prando.springbootreactiveservice.component.person.PersonComponent;
 import com.prando.springbootreactiveservice.model.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -17,25 +17,25 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @Component
 public class PersonHandler {
 
-    private final PersonService personService;
+    private final PersonComponent personComponent;
 
-    public PersonHandler(PersonService personService) {
-        this.personService = personService;
+    public PersonHandler(PersonComponent personComponent) {
+        this.personComponent = personComponent;
     }
 
     public Mono<ServerResponse> findPersonById(ServerRequest request) {
-        return personService.findPersonById(Integer.valueOf(request.pathVariable("id")))
+        return personComponent.findPersonById(Integer.valueOf(request.pathVariable("id")))
                 .flatMap(person -> ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(person), Person.class))
                 .switchIfEmpty(notFound().build());
     }
 
     public Mono<ServerResponse> listPerson(ServerRequest request) {
-        return ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personService.listPerson(), Person.class);
+        return ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personComponent.listPerson(), Person.class);
     }
 
     public Mono<ServerResponse> createPerson(ServerRequest request) {
         return request.bodyToMono(Person.class)
-                .flatMap(person -> ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personService.createPerson(person), Person.class));
+                .flatMap(person -> ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personComponent.createPerson(person), Person.class));
     }
 
     public Mono<ServerResponse> updatePerson(ServerRequest request) {
@@ -44,7 +44,7 @@ public class PersonHandler {
 
         return idMono
                 .zipWith(personMono)
-                .flatMap(idAndPersonTuple -> personService.updatePerson(idAndPersonTuple.getT1(), idAndPersonTuple.getT2()))
+                .flatMap(idAndPersonTuple -> personComponent.updatePerson(idAndPersonTuple.getT1(), idAndPersonTuple.getT2()))
                 .flatMap(person -> ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(person), Person.class))
                 .doOnError(throwable -> log.error("", throwable))
                 .switchIfEmpty(notFound().build());
@@ -53,7 +53,7 @@ public class PersonHandler {
     public Mono<ServerResponse> removePerson(ServerRequest request) {
         Mono<Integer> idMono = Mono.just(request.pathVariable("id")).map(Integer::valueOf);
 
-        return idMono.flatMap(personService::removePerson)
+        return idMono.flatMap(personComponent::removePerson)
                 .flatMap(person -> noContent().build());
     }
 }

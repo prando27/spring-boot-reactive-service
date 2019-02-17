@@ -1,4 +1,4 @@
-package com.prando.springbootreactiveservice.component;
+package com.prando.springbootreactiveservice.component.person;
 
 import com.prando.springbootreactiveservice.model.Person;
 import io.micrometer.core.instrument.util.StringUtils;
@@ -15,13 +15,13 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Service
-public class PersonService {
+public class PersonComponent {
 
     private final PersonRepository personRepository;
     private final ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
 
-    public PersonService(PersonRepository personRepository,
-                         ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+    public PersonComponent(PersonRepository personRepository,
+                           ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
         this.personRepository = personRepository;
         this.reactiveRedisTemplate = reactiveRedisTemplate;
     }
