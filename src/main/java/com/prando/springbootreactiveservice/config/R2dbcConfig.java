@@ -2,7 +2,6 @@ package com.prando.springbootreactiveservice.config;
 
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
-import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +32,7 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
 
     @Bean
     @Override
-    public ConnectionFactory connectionFactory() {
+    public PostgresqlConnectionFactory connectionFactory() {
         return new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder()
                 .host(host)
                 .port(port)

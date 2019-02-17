@@ -1,4 +1,4 @@
-package com.prando.springbootreactiveservice.component.person;
+package com.prando.springbootreactiveservice.component.personspringdata;
 
 import com.prando.springbootreactiveservice.model.Person;
 import io.micrometer.core.instrument.util.StringUtils;
