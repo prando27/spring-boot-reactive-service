@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 2.1 - Redis with Lettuce -
  * 3 - Persistence using R2DBC and Postgres - OK
  * 3.1 - Spring Data R2dbc - OK
+ * 3.1.1 - Problem with mult-module Spring Data repositories - https://github.com/spring-projects/spring-data-examples/tree/master/multi-store
  * 4 - GlobalExceptionHandler -
  * 4.1 - https://www.baeldung.com/spring-webflux-errors
  */

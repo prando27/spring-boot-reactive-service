@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Signal;
 
+import java.time.Duration;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -17,10 +18,10 @@ import java.util.function.Function;
 public class PersonService {
 
     private final PersonRepository personRepository;
-    private final ReactiveRedisTemplate<String, Person> reactiveRedisTemplate;
+    private final ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
 
     public PersonService(PersonRepository personRepository,
-                         ReactiveRedisTemplate<String, Person> reactiveRedisTemplate) {
+                         ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
         this.personRepository = personRepository;
         this.reactiveRedisTemplate = reactiveRedisTemplate;
     }
@@ -32,11 +33,11 @@ public class PersonService {
     }
 
     private Function<Integer, Mono<Signal<? extends Person>>> findPersonReader() {
-        return key -> reactiveRedisTemplate.opsForValue().get(key).map(Signal::next);
+        return key -> reactiveRedisTemplate.opsForValue().get(key.toString()).map(obj -> (Person) obj).map(Signal::next);
     }
 
     private BiFunction<Integer, Signal<? extends Person>, Mono<Void>> findPersonWriter() {
-        return (key, value) -> reactiveRedisTemplate.opsForValue().set(key.toString(), value.get()).then();
+        return (key, value) -> reactiveRedisTemplate.opsForValue().set(key.toString(), value.get(), Duration.ofMinutes(1L)).then();
     }
 
     public Flux<Person> listPerson() {
@@ -51,7 +52,7 @@ public class PersonService {
         return personRepository.findById(id)
                 .map(personFound -> this.patch(personFound, person))
                 .flatMap(personToUpdate -> personRepository.save(personToUpdate)
-                        .flatMap(personUpdated -> reactiveRedisTemplate.opsForValue().set(id.toString(), personUpdated)
+                        .flatMap(personUpdated -> reactiveRedisTemplate.opsForValue().set(id.toString(), personUpdated, Duration.ofMinutes(1L))
                                 .then(Mono.just(personUpdated))
                                 .onErrorReturn(personUpdated)))
                 .switchIfEmpty(Mono.empty());
