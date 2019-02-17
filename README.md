@@ -12,9 +12,9 @@ Spring WebFlux (with Functional Endpoints), Redis Cache, R2DBC, Spring Data R2DB
 3 Persistence using R2DBC and Postgres - OK
  * Spring Data R2dbc - OK
  * Problem with mult-module Spring Data repositories - https://github.com/spring-projects/spring-data-examples/tree/master/multi-store
- * Reactor Pool - 
-  * https://github.com/reactor/reactor/issues/651
-  * https://github.com/rdegnan/reactor-pool
-  * https://github.com/davidmoten/rxjava2-jdbc
+ * Reactor Pool - OK
+   * https://github.com/reactor/reactor/issues/651
+   * https://github.com/rdegnan/reactor-pool
+   * https://github.com/davidmoten/rxjava2-jdbc
 
-4 - GlobalExceptionHandler - (https://www.baeldung.com/spring-webflux-errors) 
+4 - GlobalExceptionHandler - (https://www.baeldung.com/spring-webflux-errors) - TODO
