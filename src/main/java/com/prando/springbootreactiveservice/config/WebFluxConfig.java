@@ -16,14 +16,11 @@ public class WebFluxConfig implements WebFluxConfigurer {
     @Bean
     public RouterFunction<ServerResponse> helloWorldRouterFunction(PersonHandler personHandler) {
         return RouterFunctions.route()
-                .GET("/personspringdata/{id}", personHandler::findPersonById)
-                .GET("/personspringdata", personHandler::listPerson)
-                .POST("/personspringdata", personHandler::createPerson)
-                .PUT("/personspringdata/{id}", personHandler::updatePerson)
-                .DELETE("/personspringdata/{id}", personHandler::removePerson)
-
-                .GET("/personreactorpool", personHandler::listPerson2)
-                .GET("/personreactorpool/{id}", personHandler::findPersonById2)
+                .GET("/person/{id}", personHandler::findPersonById)
+                .GET("/person", personHandler::listPerson)
+                .POST("/person", personHandler::createPerson)
+                .PUT("/person/{id}", personHandler::updatePerson)
+                .DELETE("/person/{id}", personHandler::removePerson)
                 .build();
     }
 }

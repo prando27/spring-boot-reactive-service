@@ -1,6 +1,6 @@
 package com.prando.springbootreactiveservice.http.handler;
 
-import com.prando.springbootreactiveservice.component.personspringdata.PersonComponent;
+import com.prando.springbootreactiveservice.component.person.PersonComponent;
 import com.prando.springbootreactiveservice.model.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
