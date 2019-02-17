@@ -1,4 +1,4 @@
-package com.prando.springbootreactiveservice.component.personspringdata;
+package com.prando.springbootreactiveservice.component.person;
 
 import com.prando.springbootreactiveservice.model.Person;
 import io.micrometer.core.instrument.util.StringUtils;
@@ -26,7 +26,7 @@ public class PersonComponent {
         this.reactiveRedisTemplate = reactiveRedisTemplate;
     }
 
-    public Mono<Person> findPersonById(Integer id) {
+    public Mono<Person> findById(Integer id) {
         return CacheMono.lookup(findPersonReader(), id)
                 .onCacheMissResume(personRepository.findById(id))
                 .andWriteWith(findPersonWriter());
@@ -43,15 +43,15 @@ public class PersonComponent {
                 .then();
     }
 
-    public Flux<Person> listPerson() {
+    public Flux<Person> findAll() {
         return personRepository.findAll();
     }
 
-    public Mono<Person> createPerson(Person person) {
+    public Mono<Person> create(Person person) {
         return personRepository.save(person);
     }
 
-    public Mono<Person> updatePerson(Integer id, Person person) {
+    public Mono<Person> update(Integer id, Person person) {
         return personRepository.findById(id)
                 .map(personFound -> this.patch(personFound, person))
                 .flatMap(personToUpdate -> personRepository.save(personToUpdate)
@@ -68,7 +68,7 @@ public class PersonComponent {
         return personBuilder.build();
     }
 
-    public Mono<Void> removePerson(Integer id) {
+    public Mono<Void> deleteById(Integer id) {
         return personRepository.deleteById(id)
                 .then(reactiveRedisTemplate.opsForValue().delete(id.toString()))
                 .then();
