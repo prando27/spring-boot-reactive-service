@@ -33,11 +33,14 @@ public class PersonService {
     }
 
     private Function<Integer, Mono<Signal<? extends Person>>> findPersonReader() {
-        return key -> reactiveRedisTemplate.opsForValue().get(key.toString()).map(obj -> (Person) obj).map(Signal::next);
+        return key -> reactiveRedisTemplate.opsForValue().get(key.toString())
+                .map(obj -> (Person) obj)
+                .map(Signal::next);
     }
 
     private BiFunction<Integer, Signal<? extends Person>, Mono<Void>> findPersonWriter() {
-        return (key, value) -> reactiveRedisTemplate.opsForValue().set(key.toString(), value.get(), Duration.ofMinutes(1L)).then();
+        return (key, value) -> reactiveRedisTemplate.opsForValue().set(key.toString(), value.get(), Duration.ofMinutes(1L))
+                .then();
     }
 
     public Flux<Person> listPerson() {
