@@ -32,12 +32,6 @@ public class PersonHandler {
                 .switchIfEmpty(notFound().build());
     }
 
-    public Mono<ServerResponse> findPersonById2(ServerRequest request) {
-        return personService2.findById(Integer.valueOf(request.pathVariable("id")))
-                .flatMap(person -> ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(Mono.just(person), Person.class))
-                .switchIfEmpty(notFound().build());
-    }
-
     public Mono<ServerResponse> listPerson(ServerRequest request) {
         return ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(personComponent.listPerson(), Person.class);
     }
