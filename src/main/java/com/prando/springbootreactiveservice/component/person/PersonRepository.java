@@ -8,8 +8,10 @@ import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 @Component
 class PersonRepository {
@@ -19,7 +21,8 @@ class PersonRepository {
     PersonRepository(PostgresqlConnectionFactory connectionFactory) {
         this.connectionPool = NonBlockingPool.factory(connectionFactory.create())
                 .disposer(connection -> connection.close().subscribe())
-                .maxSize(50)
+                .maxSize(5)
+                .scheduler(Schedulers.fromExecutor(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())))
                 .build();
     }
 
